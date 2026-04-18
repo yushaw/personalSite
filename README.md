@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# xiaoyu.io
 
-## Getting Started
+Personal website. Built with Next.js, Tailwind CSS, deployed to Cloudflare Pages.
 
-First, run the development server:
+## Development
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev      # Start dev server at localhost:3000
+npm run build    # Static export to ./out
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Writing
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Articles live in `content/writing/` as plain `.md` files with frontmatter:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```markdown
+---
+title: "Article Title"
+date: "2026-04-18"
+description: "Brief description."
+tags: ["ai-product-design"]
+draft: false
+---
 
-## Learn More
+Article content in standard markdown.
+```
 
-To learn more about Next.js, take a look at the following resources:
+- Copy `content/writing/_template.md` to start a new article
+- Set `draft: true` to hide from production
+- Push to main branch to deploy
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+app/                    Next.js app router pages
+  writing/              Writing list + [slug] detail
+  projects/             Projects page
+  about/                About page
+  feed.xml/             RSS feed
+components/             Shared components (nav, footer, theme toggle)
+content/writing/        Markdown articles
+lib/                    Content pipeline + utilities
+```
 
-## Deploy on Vercel
+## Tech stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Next.js 16 (static export)
+- Tailwind CSS v4
+- Geist font family
+- gray-matter + unified/remark/rehype for markdown
+- next-themes for dark mode
+- Cloudflare Pages for hosting
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Design
+
+- Paco Coursey (paco.me) inspired aesthetic: minimal, typographic, restrained
+- Brian Lovin (brianlovin.com) inspired content structure: Writing + Projects + About
+- 640px max-width, generous whitespace, Geist Sans + Mono
+
+## Log
+
+- 2026-04-18: Initial setup. Next.js project with full page structure (home, writing, projects, about), markdown content pipeline, dark mode, RSS feed, SEO meta tags. Design system based on Paco Coursey's aesthetic. Ready for Cloudflare Pages deployment.

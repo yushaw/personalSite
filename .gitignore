@@ -24,6 +24,10 @@
 .DS_Store
 *.pem
 
+# original images (processed versions in public/)
+*.heic
+*.HEIC
+
 # debug
 npm-debug.log*
 yarn-debug.log*
