@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import { GeistMono } from "geist/font/mono";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Nav } from "@/components/nav";
+import { NavTracker } from "@/components/nav-tracker";
 import { Footer } from "@/components/footer";
 import "./globals.css";
 
@@ -75,6 +76,7 @@ export default function RootLayout({
         <ThemeProvider>
           <div className="w-full max-w-[640px] mx-auto px-6">
             <Nav />
+            <NavTracker />
             <main className="flex-1">{children}</main>
             <Footer />
           </div>

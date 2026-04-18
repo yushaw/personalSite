@@ -10,15 +10,24 @@ interface LightboxImageProps {
 
 export function LightboxImage({ src, alt, className }: LightboxImageProps) {
   const [open, setOpen] = useState(false);
-  const [loaded, setLoaded] = useState(false);
+  const [thumbLoaded, setThumbLoaded] = useState(false);
+  const [fullLoaded, setFullLoaded] = useState(false);
   const [closing, setClosing] = useState(false);
-  const backdropRef = useRef<HTMLDivElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  // Handle cached images that won't fire onLoad
+  useEffect(() => {
+    if (imgRef.current?.complete) {
+      setThumbLoaded(true);
+    }
+  }, []);
 
   const close = useCallback(() => {
     setClosing(true);
     setTimeout(() => {
       setOpen(false);
       setClosing(false);
+      setFullLoaded(false);
     }, 200);
   }, []);
 
@@ -38,25 +47,24 @@ export function LightboxImage({ src, alt, className }: LightboxImageProps) {
   return (
     <>
       <img
+        ref={imgRef}
         src={src}
         alt={alt}
-        className={`${className} cursor-zoom-in transition-opacity duration-150 hover:opacity-90`}
+        className={`${className} cursor-zoom-in transition-opacity duration-500 ease-out ${
+          thumbLoaded ? "opacity-100 hover:opacity-90" : "opacity-0"
+        }`}
         loading="lazy"
-        onClick={() => {
-          setOpen(true);
-          setLoaded(false);
-        }}
+        onLoad={() => setThumbLoaded(true)}
+        onClick={() => setOpen(true)}
       />
 
       {open && (
         <div
-          ref={backdropRef}
           className={`fixed inset-0 z-50 flex items-center justify-center cursor-zoom-out transition-all duration-200 ${
             closing ? "bg-black/0" : "bg-black/85"
           }`}
           onClick={close}
         >
-          {/* Close hint */}
           <button
             onClick={close}
             className={`absolute top-6 right-6 text-white/60 hover:text-white transition-opacity duration-200 ${
@@ -70,14 +78,13 @@ export function LightboxImage({ src, alt, className }: LightboxImageProps) {
             </svg>
           </button>
 
-          {/* Image */}
           <img
             src={src}
             alt={alt}
             className={`max-w-[92vw] max-h-[92vh] object-contain rounded-lg shadow-2xl transition-all duration-200 ${
               closing
                 ? "opacity-0 scale-95"
-                : loaded
+                : fullLoaded
                   ? "opacity-100 scale-100"
                   : "opacity-0 scale-95"
             }`}
@@ -85,7 +92,7 @@ export function LightboxImage({ src, alt, className }: LightboxImageProps) {
               e.stopPropagation();
               close();
             }}
-            onLoad={() => setLoaded(true)}
+            onLoad={() => setFullLoaded(true)}
           />
         </div>
       )}

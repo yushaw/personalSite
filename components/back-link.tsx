@@ -11,43 +11,34 @@ const labelMap: Record<string, string> = {
   "/about": "About",
 };
 
-function getLabelFromReferrer(): string | null {
-  try {
-    const ref = document.referrer;
-    if (!ref) return null;
-    const url = new URL(ref);
-    if (url.origin !== window.location.origin) return null;
-    const path = url.pathname;
-    for (const [prefix, label] of Object.entries(labelMap)) {
-      if (path === prefix || (prefix !== "/" && path.startsWith(prefix))) {
-        return label;
-      }
-    }
-  } catch {
-    // ignore
-  }
-  return null;
-}
-
 export function BackLink({ fallback = "/writing" }: { fallback?: string }) {
   const router = useRouter();
   const [label, setLabel] = useState(labelMap[fallback] || "Back");
+  const [hasPrev, setHasPrev] = useState(false);
 
   useEffect(() => {
-    const fromLabel = getLabelFromReferrer();
-    if (fromLabel) setLabel(fromLabel);
+    const prev = sessionStorage.getItem("nav:prev");
+    if (prev) {
+      for (const [prefix, name] of Object.entries(labelMap)) {
+        if (prev === prefix || (prefix !== "/" && prev.startsWith(prefix + "/"))) {
+          setLabel(name);
+          break;
+        }
+      }
+      setHasPrev(true);
+    }
   }, []);
 
   return (
     <button
       onClick={() => {
-        if (window.history.length > 1) {
+        if (hasPrev) {
           router.back();
         } else {
           router.push(fallback);
         }
       }}
-      className="text-sm text-muted hover:text-text transition-colors duration-150"
+      className="text-sm text-muted hover:text-text transition-colors duration-150 cursor-pointer"
     >
       &larr; {label}
     </button>
