@@ -45,7 +45,7 @@ export default function WritingPage() {
                   <span className="text-[15px] text-muted group-hover:text-text transition-colors duration-150">
                     {article.title}
                   </span>
-                  <span className="text-[13px] font-mono text-muted/60 shrink-0 hidden sm:inline">
+                  <span className="text-[13px] font-mono text-muted/60 shrink-0 inline">
                     {formatDate(article.date)}
                   </span>
                 </Link>

@@ -30,7 +30,7 @@ export function Nav() {
         />
         charlie
       </Link>
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-4 sm:gap-6">
         {links.map(({ href, label }) => {
           const isActive =
             pathname === href || pathname.startsWith(href + "/");

@@ -1,4 +1,5 @@
 import { createMetadata } from "@/lib/metadata";
+import { socialLinks } from "@/lib/social-links";
 
 export const metadata = createMetadata({
   title: "About",
@@ -40,34 +41,18 @@ export default function AboutPage() {
           Connect
         </h2>
         <ul className="space-y-2 text-sm">
-          <li>
-            <a
-              href="https://x.com/yushaw"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted hover:text-text transition-colors duration-150"
-            >
-              x.com/yushaw
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://github.com/yushaw"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted hover:text-text transition-colors duration-150"
-            >
-              github.com/yushaw
-            </a>
-          </li>
-          <li>
-            <a
-              href="mailto:shawonline@gmail.com"
-              className="text-muted hover:text-text transition-colors duration-150"
-            >
-              shawonline@gmail.com
-            </a>
-          </li>
+          {socialLinks.map(({ href, display }) => (
+            <li key={href}>
+              <a
+                href={href}
+                target={href.startsWith("mailto:") ? undefined : "_blank"}
+                rel={href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+                className="text-muted hover:text-text transition-colors duration-150"
+              >
+                {display}
+              </a>
+            </li>
+          ))}
         </ul>
       </section>
     </div>

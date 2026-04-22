@@ -24,7 +24,7 @@ const sans = localFont({
 export const metadata: Metadata = {
   title: {
     default: "Yu Xiao",
-    template: "%s - xiaoyu.io",
+    template: "%s - Yu Xiao",
   },
   description: "Words to Actions. Building AI products.",
   metadataBase: new URL("https://xiaoyu.io"),

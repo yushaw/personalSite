@@ -14,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: "https://xiaoyu.io/writing", lastModified: new Date() },
     { url: "https://xiaoyu.io/projects", lastModified: new Date() },
     { url: "https://xiaoyu.io/about", lastModified: new Date() },
+    { url: "https://xiaoyu.io/play", lastModified: new Date() },
   ];
 
   return [...pages, ...articles];

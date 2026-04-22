@@ -1,37 +1,11 @@
 import { createMetadata } from "@/lib/metadata";
+import { projects } from "@/lib/projects-data";
 
 export const metadata = createMetadata({
   title: "Projects",
   description: "Things I'm building.",
   path: "/projects",
 });
-
-const projects = [
-  {
-    name: "Sanqian",
-    description:
-      "Your desktop Agent orchestration hub. Vendor-neutral, local-first, extensible. One interface for every AI model and every tool you use.",
-    url: "https://sanqian.ai",
-  },
-  {
-    name: "Note",
-    description:
-      "A note-taking app for deep thinking. Immersive writing with AI chat, bi-directional links, and full-text + semantic search.",
-    url: "https://sanqian.ai/note",
-  },
-  {
-    name: "Todo",
-    description:
-      "Minimal todo with outline thinking. Unlimited nesting, forecast view, and AI-assisted task management.",
-    url: "https://sanqian.ai/todo",
-  },
-  {
-    name: "Sati",
-    description:
-      "AI agent for browser and Office. Web automation, Excel plugin, seamless sync with desktop.",
-    url: "https://sanqian.ai/sati",
-  },
-];
 
 export default function ProjectsPage() {
   return (

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getAllArticles } from "@/lib/content";
+import { projects } from "@/lib/projects-data";
 import { PlaySection } from "@/components/play-section";
 
 function formatMonth(dateStr: string): string {
@@ -67,12 +68,7 @@ export default function Home() {
           Projects
         </Link>
         <ul>
-          {[
-            { name: "Sanqian", desc: "Your desktop Agent orchestration hub.", url: "https://sanqian.ai" },
-            { name: "Note", desc: "A note-taking app for deep thinking.", url: "https://sanqian.ai/note" },
-            { name: "Todo", desc: "Minimal todo with outline thinking.", url: "https://sanqian.ai/todo" },
-            { name: "Sati", desc: "AI agent for browser and Office.", url: "https://sanqian.ai/sati" },
-          ].map((p) => (
+          {projects.map((p) => (
             <li key={p.name}>
               <a
                 href={p.url}
