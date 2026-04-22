@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import GithubSlugger from "github-slugger";
 import { unified } from "unified";
 import remarkParse from "remark-parse";
 import remarkGfm from "remark-gfm";
@@ -11,6 +12,12 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
 const contentDir = path.join(process.cwd(), "content/writing");
 
+export interface TocItem {
+  id: string;
+  level: number;
+  text: string;
+}
+
 export interface Article {
   slug: string;
   title: string;
@@ -19,6 +26,7 @@ export interface Article {
   tags: string[];
   draft: boolean;
   content: string;
+  headings: TocItem[];
 }
 
 export interface ArticleMeta {
@@ -88,6 +96,20 @@ export async function getArticle(slug: string): Promise<Article | null> {
     .use(rehypeStringify, { allowDangerousHtml: true })
     .process(rawContent);
 
+  // Extract headings (h2, h3) with IDs matching rehype-slug
+  const slugger = new GithubSlugger();
+  const headings: TocItem[] = [];
+  const headingRegex = /^(#{2,3})\s+(.+)$/gm;
+  let match;
+  while ((match = headingRegex.exec(rawContent)) !== null) {
+    const text = match[2].replace(/\*\*(.+?)\*\*/g, "$1").replace(/`(.+?)`/g, "$1").trim();
+    headings.push({
+      id: slugger.slug(text),
+      level: match[1].length,
+      text,
+    });
+  }
+
   return {
     slug,
     title: data.title || "Untitled",
@@ -96,6 +118,7 @@ export async function getArticle(slug: string): Promise<Article | null> {
     tags: data.tags || [],
     draft: data.draft || false,
     content: String(result),
+    headings,
   };
 }
 

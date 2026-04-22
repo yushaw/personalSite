@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getArticle, getArticleSlugs } from "@/lib/content";
 import { BackLink } from "@/components/back-link";
+import { FloatingToc } from "@/components/floating-toc";
 import type { Metadata } from "next";
 
 interface PageProps {
@@ -63,6 +64,8 @@ export default async function ArticlePage({ params }: PageProps) {
         className="prose text-base"
         dangerouslySetInnerHTML={{ __html: article.content }}
       />
+
+      <FloatingToc headings={article.headings} />
     </div>
   );
 }
