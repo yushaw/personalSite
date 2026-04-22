@@ -35,11 +35,21 @@ Article content in standard markdown.
 app/                    Next.js app router pages
   writing/              Writing list + [slug] detail
   projects/             Projects page
+  play/                 Play page (HiFi, Photography, Gallery)
   about/                About page
   feed.xml/             RSS feed
-components/             Shared components (nav, footer, theme toggle)
+components/             Shared components
+  lightbox-overlay.tsx  Shared lightbox overlay (keyboard, touch swipe, close animation)
+  lightbox.tsx          Single image lightbox (uses overlay)
+  gallery.tsx           Photo gallery with masonry layout (uses overlay)
+  floating-toc.tsx      Floating table of contents for articles
 content/writing/        Markdown articles
-lib/                    Content pipeline + utilities
+lib/                    Content pipeline + shared data
+  content.ts            Markdown processing + heading extraction
+  projects-data.ts      Projects list (shared by home + /projects)
+  social-links.ts       Social links (shared by footer + /about)
+  play-data.ts          Play items + gallery photos (shared by home + /play)
+public/play/photos/     Gallery photo assets
 ```
 
 ## Tech stack
@@ -60,3 +70,4 @@ lib/                    Content pipeline + utilities
 ## Log
 
 - 2026-04-18: Initial setup. Next.js project with full page structure (home, writing, projects, about), markdown content pipeline, dark mode, RSS feed, SEO meta tags. Design system based on Paco Coursey's aesthetic. Ready for Cloudflare Pages deployment.
+- 2026-04-22: Add tool-management-in-sanqian article. Add FloatingToc component (minimap sidebar for articles, hover to expand). Add photo gallery with masonry layout and lightbox (prev/next, keyboard, touch swipe). Extract shared data (projects, social links, play items) to lib/. Favicon with circular white background. Remove unused font files and npm dependencies. Sitemap add /play. Title template "Yu Xiao". All transition durations capped at 200ms.
