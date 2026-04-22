@@ -3,8 +3,14 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { LightboxOverlay } from "./lightbox-overlay";
 
+interface GalleryImage {
+  src: string;
+  width: number;
+  height: number;
+}
+
 interface GalleryProps {
-  images: string[];
+  images: GalleryImage[];
 }
 
 export function Gallery({ images }: GalleryProps) {
@@ -37,19 +43,27 @@ export function Gallery({ images }: GalleryProps) {
   return (
     <>
       <div className="columns-2 gap-2 space-y-2">
-        {images.map((src, i) => (
-          <img
-            key={src}
-            ref={(el) => { thumbRefs.current[i] = el; }}
-            src={src}
-            alt=""
-            className={`w-full rounded-lg cursor-zoom-in transition-all duration-200 ease-out break-inside-avoid ${
-              thumbLoaded.has(i) ? "opacity-100 hover:brightness-[1.03]" : "opacity-0"
+        {images.map((img, i) => (
+          <div
+            key={img.src}
+            className={`break-inside-avoid rounded-lg overflow-hidden ${
+              thumbLoaded.has(i) ? "" : "img-loading"
             }`}
-            loading="lazy"
-            onLoad={() => setThumbLoaded((prev) => new Set(prev).add(i))}
-            onClick={() => setCurrent(i)}
-          />
+          >
+            <img
+              ref={(el) => { thumbRefs.current[i] = el; }}
+              src={img.src}
+              alt=""
+              width={img.width}
+              height={img.height}
+              className={`w-full cursor-zoom-in transition-all duration-200 ease-out ${
+                thumbLoaded.has(i) ? "opacity-100 hover:brightness-[1.03]" : "opacity-0"
+              }`}
+              loading="lazy"
+              onLoad={() => setThumbLoaded((prev) => new Set(prev).add(i))}
+              onClick={() => setCurrent(i)}
+            />
+          </div>
         ))}
       </div>
 
@@ -61,7 +75,7 @@ export function Gallery({ images }: GalleryProps) {
           counter={`${current + 1} / ${images.length}`}
         >
           <img
-            src={images[current]}
+            src={images[current].src}
             alt=""
             className={`max-w-[92vw] max-h-[92vh] object-contain rounded-lg shadow-2xl transition-opacity duration-200 ${
               loaded.has(current) ? "opacity-100" : "opacity-0"

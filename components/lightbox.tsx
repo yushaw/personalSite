@@ -6,10 +6,12 @@ import { LightboxOverlay } from "./lightbox-overlay";
 interface LightboxImageProps {
   src: string;
   alt: string;
+  width?: number;
+  height?: number;
   className?: string;
 }
 
-export function LightboxImage({ src, alt, className }: LightboxImageProps) {
+export function LightboxImage({ src, alt, width, height, className }: LightboxImageProps) {
   const [open, setOpen] = useState(false);
   const [thumbLoaded, setThumbLoaded] = useState(false);
   const [fullLoaded, setFullLoaded] = useState(false);
@@ -23,17 +25,21 @@ export function LightboxImage({ src, alt, className }: LightboxImageProps) {
 
   return (
     <>
-      <img
-        ref={imgRef}
-        src={src}
-        alt={alt}
-        className={`${className} cursor-zoom-in transition-all duration-200 ease-out ${
-          thumbLoaded ? "opacity-100 hover:brightness-[1.03]" : "opacity-0"
-        }`}
-        loading="lazy"
-        onLoad={() => setThumbLoaded(true)}
-        onClick={() => setOpen(true)}
-      />
+      <div className={`overflow-hidden rounded-lg ${thumbLoaded ? "" : "img-loading"}`}>
+        <img
+          ref={imgRef}
+          src={src}
+          alt={alt}
+          width={width}
+          height={height}
+          className={`${className} cursor-zoom-in transition-all duration-200 ease-out ${
+            thumbLoaded ? "opacity-100 hover:brightness-[1.03]" : "opacity-0"
+          }`}
+          loading="lazy"
+          onLoad={() => setThumbLoaded(true)}
+          onClick={() => setOpen(true)}
+        />
+      </div>
 
       {open && (
         <LightboxOverlay onClose={() => { setOpen(false); setFullLoaded(false); }}>

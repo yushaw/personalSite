@@ -19,11 +19,15 @@ export function PlayContent() {
             <p className="text-[14px] text-muted leading-relaxed">
               {item.note}
             </p>
-            <LightboxImage
-              src={item.image}
-              alt={item.name}
-              className="w-full max-h-[360px] object-cover rounded-lg mt-4"
-            />
+            <div className="mt-4">
+              <LightboxImage
+                src={item.image}
+                alt={item.name}
+                width={item.width}
+                height={item.height}
+                className="w-full max-h-[360px] object-cover rounded-lg"
+              />
+            </div>
           </div>
         ))}
 
