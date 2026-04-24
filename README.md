@@ -71,3 +71,4 @@ public/play/photos/     Gallery photo assets
 
 - 2026-04-18: Initial setup. Next.js project with full page structure (home, writing, projects, about), markdown content pipeline, dark mode, RSS feed, SEO meta tags. Design system based on Paco Coursey's aesthetic. Ready for Cloudflare Pages deployment.
 - 2026-04-22: Add tool-management-in-sanqian article. Add FloatingToc component (minimap sidebar for articles, hover to expand). Add photo gallery with masonry layout and lightbox (prev/next, keyboard, touch swipe). Extract shared data (projects, social links, play items) to lib/. Favicon with circular white background. Remove unused font files and npm dependencies. Sitemap add /play. Title template "Yu Xiao". All transition durations capped at 200ms.
+- 2026-04-24: Add codex-background-computer-use article -- how Codex does background computer use on macOS, and building ghostpoke.
